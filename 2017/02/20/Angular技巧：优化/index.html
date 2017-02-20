@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Angular技巧：优化 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一次绑定{ ::expression }
+$scope.$digest vs $scope.$apply尽可能少调用 ng-repeatng-repeat默认会创建很多监听器,所以在数据量很大的时候,这个非常消耗页面性能,我觉的只有在当需要经常更新数据列表的时候才需要用ng-repeat,要不然放那么多的监听器在那里也是浪费,这时候可以用ng自带的$interpolate服务来解析一个代码片段,类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular技巧：优化">
+<meta property="og:url" content="http://yoursite.com/2017/02/20/Angular技巧：优化/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一次绑定{ ::expression }
+$scope.$digest vs $scope.$apply尽可能少调用 ng-repeatng-repeat默认会创建很多监听器,所以在数据量很大的时候,这个非常消耗页面性能,我觉的只有在当需要经常更新数据列表的时候才需要用ng-repeat,要不然放那么多的监听器在那里也是浪费,这时候可以用ng自带的$interpolate服务来解析一个代码片段,类">
+<meta property="og:updated_time" content="2017-02-20T13:03:35.929Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular技巧：优化">
+<meta name="twitter:description" content="一次绑定{ ::expression }
+$scope.$digest vs $scope.$apply尽可能少调用 ng-repeatng-repeat默认会创建很多监听器,所以在数据量很大的时候,这个非常消耗页面性能,我觉的只有在当需要经常更新数据列表的时候才需要用ng-repeat,要不然放那么多的监听器在那里也是浪费,这时候可以用ng自带的$interpolate服务来解析一个代码片段,类">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Angular技巧：优化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/20/Angular技巧：优化/" class="article-date">
+  <time datetime="2017-02-20T12:48:36.000Z" itemprop="datePublished">2017-02-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/webpack/">webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Angular技巧：优化
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一次绑定"><a href="#一次绑定" class="headerlink" title="一次绑定"></a>一次绑定</h1><p>{ ::expression }</p>
+<h1 id="scope-digest-vs-scope-apply"><a href="#scope-digest-vs-scope-apply" class="headerlink" title="$scope.$digest vs $scope.$apply"></a>$scope.$digest vs $scope.$apply</h1><h1 id="尽可能少调用-ng-repeat"><a href="#尽可能少调用-ng-repeat" class="headerlink" title="尽可能少调用 ng-repeat"></a>尽可能少调用 ng-repeat</h1><p>ng-repeat默认会创建很多监听器,所以在数据量很大的时候,这个非常消耗页面性能,我觉的只有在当需要经常更新数据列表的时候才需要用ng-repeat,要不然放那么多的监听器在那里也是浪费,这时候可以用ng自带的$interpolate服务来解析一个代码片段,类似于一个静态模板引擎,它的内部主要依赖ng核心解析服务$parse,然后把这些填充数据之后的代码片段直接赋给一个一次性的模型性就可以.</p>
+<h1 id="尽量在指令里写原生语法"><a href="#尽量在指令里写原生语法" class="headerlink" title="尽量在指令里写原生语法"></a>尽量在指令里写原生语法</h1><p>虽然ng提供了很多的指令比如 <code>ng-show</code>,<code>ng-hide</code>,其实它们作用就是根据模型的true,false来显示或隐藏一个代码片段,虽然能够很快速的实现业务要求,但是这些指令还是默认会添加监听器,假如这些代码片段存在于一个大的指令里面时,更好的方法是在指令link里编写.show(), .hide()这些类似的jq方法来控制比较好,这样可以节省监听器的数量,类似的还有自带的事件指令,这些其实都可以在外围指令里通过使用addEventListener来绑定事件,反正在写代码之前,最好想想怎么样来使监听器的数量最少,这样才能全面的提高页面性能.</p>
+<h1 id="页面内尽量少用filters"><a href="#页面内尽量少用filters" class="headerlink" title="页面内尽量少用filters"></a>页面内尽量少用filters</h1><p>当在页面内的模型后面增加filter时,这个会造成当前模型在$digest里运行两次,造成不必要的性能浪费.第一次在$$watchers检测任务改变时;第二次发生在模型值修改时,所以尽量少用内联时的过滤器语法,像下面这样的非常影响页面性能<br>推荐使用$filter服务来调用某个过滤器函数在后台,这样能明显的提高页面性能<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$filter(<span class="string">'filter'</span>)(array, expression, comparator);</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：优化/" data-id="cize4ni3h000hcsbvb8f3558c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/20/Angular技巧：-apply/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Angular技巧：$apply
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/20/Angular入门：MVVM/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Angular入门：MVVM</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/20/Angular技巧：-digest/">Angular技巧：$digest</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/20/Angular技巧：-apply/">Angular技巧：$apply</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/20/Angular技巧：优化/">Angular技巧：优化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/20/Angular入门：MVVM/">Angular入门：MVVM</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/20/Angular入门：-scope/">Angular入门：$scope</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
