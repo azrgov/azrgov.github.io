@@ -61,6 +61,204 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Angular技巧：重写内置验证器方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/20/Angular技巧：重写内置验证器方法/" class="article-date">
+  <time datetime="2017-02-20T14:57:02.000Z" itemprop="datePublished">2017-02-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/20/Angular技巧：重写内置验证器方法/">Angular技巧：重写内置验证器方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="重写内置验证器方法"><a href="#重写内置验证器方法" class="headerlink" title="重写内置验证器方法"></a>重写内置验证器方法</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'Test'</span>,[]);</div><div class="line">app.directive(<span class="string">''</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> EMAIL_REGEXP = <span class="regexp">/^[a-z0-9!#$%&amp;'*+/=?^_`&#123;|&#125;~.-]+@example\.com$/i</span>;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">require</span>:<span class="string">'ngModel'</span>,</div><div class="line">      <span class="attr">restrict</span>:<span class="string">''</span>,</div><div class="line">      <span class="attr">link</span>:<span class="function"><span class="keyword">function</span>(<span class="params">scope,elm,attr,ctrl</span>)</span>&#123;</div><div class="line">          <span class="keyword">if</span>(ctrl &amp;&amp; ctrl.$validators.email)&#123;</div><div class="line">              ctrl.$validators.email = <span class="function"><span class="keyword">function</span>(<span class="params">modelValue</span>) </span>&#123;</div><div class="line">                <span class="keyword">return</span> ctrl.$isEmpty(modelValue) || EMAIL_REGEXP.test(modelValue);</div><div class="line">              &#125;</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>#<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"form"</span> <span class="attr">class</span>=<span class="string">"css-form"</span> <span class="attr">novalidate</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">        Overwritten Email:</div><div class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"email"</span> <span class="attr">ng-model</span>=<span class="string">"myEmail"</span> <span class="attr">overwrite-email</span> <span class="attr">name</span>=<span class="string">"overwrittenEmail"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">ng-show</span>=<span class="string">"form.overWrittenEmail.$error.email"</span>&gt;</span></div><div class="line">            This email format is invalid!</div><div class="line">        <span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">        </div><div class="line">        Model Value : &#123;&#123; myEmail &#125;&#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在创建Directive：overwriteEmail并定义它的行为时，首先判断是否当前控件存在，且控件上已定义了email这个验证器，若存在则改写其验证。</p>
+<p>本例中，改写后的email验证，将使以@example.com为后缀的email地址才能通过验证。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：重写内置验证器方法/" data-id="cizeb4nop000obsbvd6urawcv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Angular入门：基础知识" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/20/Angular入门：基础知识/" class="article-date">
+  <time datetime="2017-02-20T14:41:54.000Z" itemprop="datePublished">2017-02-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/20/Angular入门：基础知识/">Angular入门：基础知识</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h1><p>AngularJS 指令是扩展的 HTML 属性，带有前缀 ng- </p>
+<ul>
+<li>ng-app</li>
+<li>ng-init</li>
+<li>ng-model</li>
+<li>ng-repeat</li>
+<li>ng-controller</li>
+<li>ng-options</li>
+<li>ng-disabled</li>
+<li>ng-show</li>
+<li>ng-click</li>
+<li>ng-include</li>
+<li>ng-hide </li>
+</ul>
+<h1 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h1><p>使用一个管道字符（|）添加到表达式和指令中</p>
+<h2 id="常见过滤器"><a href="#常见过滤器" class="headerlink" title="常见过滤器"></a>常见过滤器</h2><ul>
+<li>currency：格式化数字为货币格式</li>
+<li>filter：从数组项中选择一个子集</li>
+<li>lowercase：格式化字符串为小写</li>
+<li>orderBy：根据某个表达式排列数组</li>
+<li>uppercase：格式化字符串为大写</li>
+</ul>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-app=&quot;Demo&quot; ng-controller=&quot;DemoCtrl&quot;&gt;</div><div class="line"> &lt;p&gt;姓名为 &#123;&#123; lastName | uppercase &#125;&#125;&lt;/p&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;div ng-app=&quot;Demo&quot; ng-controller=&quot;DemoCtrl&quot;&gt;</div><div class="line"> &lt;ul&gt;</div><div class="line"> &lt;li ng-repeat=&quot;x in names | orderBy:&apos;country&apos;&quot;&gt;</div><div class="line">  &#123;&#123; x.name + &apos;, &apos; + x.country &#125;&#125;</div><div class="line"> &lt;/li&gt;</div><div class="line"> &lt;/ul&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+<h1 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h1><p>在 AngularJS 中，服务是一个函数或对象，可在你的 AngularJS 应用中使用；</p>
+<p>AngularJS 中你可以创建自己的服务，或使用内建服务；</p>
+<p>AngularJS 内建了30 多个服务；</p>
+<h2 id="常用内置服务"><a href="#常用内置服务" class="headerlink" title="常用内置服务"></a>常用内置服务</h2><ol>
+<li>$http</li>
+</ol>
+<p>$http 是 AngularJS 中的一个核心服务。服务向服务器发送请求，应用响应服务器传送过来的数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'Demo'</span>, []);</div><div class="line">app.controller(<span class="string">'DemoCtrl'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope, $http</span>) </span>&#123;</div><div class="line">    $http(&#123;</div><div class="line">        <span class="attr">url</span>: <span class="string">'data.json'</span>,</div><div class="line">        <span class="attr">method</span>: <span class="string">'GET'</span>,</div><div class="line">        <span class="attr">params</span>: &#123;</div><div class="line">            <span class="string">'username'</span>: <span class="string">'tan'</span></div><div class="line">        &#125;</div><div class="line">    &#125;).success(<span class="function"><span class="keyword">function</span> (<span class="params">data, header, config, status</span>) </span>&#123;</div><div class="line">        <span class="comment">//响应成功</span></div><div class="line">    &#125;).error(<span class="function"><span class="keyword">function</span> (<span class="params">data, header, config, status</span>) </span>&#123;</div><div class="line">        <span class="comment">//处理响应失败</span></div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<ol>
+<li>$location</li>
+</ol>
+<p>$location 服务对应了 window.location 方法</p>
+<ol>
+<li>$timeout</li>
+</ol>
+<p>$timeout：服务对应了 window.setTimeout 方法</p>
+<ol>
+<li>$interval</li>
+</ol>
+<p>$interval：服务对应了 window.setInterval 方法</p>
+<ol>
+<li>$rootScope</li>
+</ol>
+<p>$rootScope：它可以作用在 ng-app 指令包含的所有 HTML 元素中。用 rootscope 定义的值，可以在各个 controller 中使用。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/20/Angular入门：基础知识/" data-id="cizeb4nmv000ebsbvgemz2nbb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Angular技巧：自定义验证myInteger" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/20/Angular技巧：自定义验证myInteger/" class="article-date">
+  <time datetime="2017-02-20T14:08:11.000Z" itemprop="datePublished">2017-02-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/20/Angular技巧：自定义验证myInteger/">Angular技巧：自定义验证myInteger</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Angular自定义验证"><a href="#Angular自定义验证" class="headerlink" title="Angular自定义验证"></a>Angular自定义验证</h1><p>AngularJS实际上是通过自定义Directive，并在link中将验证方法添加到指定控件的$validators中， 在$validators中定义的对象必须有modelValue和viewValue两个参数，AngluarJS会在底层调用$setValidity来验证它。</p>
+<h1 id="视图代码"><a href="#视图代码" class="headerlink" title="视图代码"></a>视图代码</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;form name=&quot;myForm&quot; ng-submit=&quot;myForm.$valid&quot; novalidate&gt;</div><div class="line">    My integer:</div><div class="line">    &lt;input name=&quot;myInteger&quot; ng-model=&quot;custInt&quot; my-integer required /&gt;</div><div class="line">    &lt;span </div><div class="line">    ng-hide=&quot;myForm.myInteger.$pristine || myForm.myInteger.$valid&quot; </div><div class="line">    ng-show=&quot;myForm.myInteger.$invalid&quot;&gt;</div><div class="line">        My integer is required and should be the value 1xx.</div><div class="line">    &lt;/span&gt;</div><div class="line">&lt;/form&gt;</div></pre></td></tr></table></figure>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>myInteger（my-integer），输入值必须是以“1”开头，并为3位数字。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app  = angular.module(<span class="string">'xxxApp'</span>,[]);</div><div class="line"><span class="keyword">var</span> INTEGER_REGEXP  =  <span class="regexp">/^\-?1\d&#123;2&#125;$/</span>;</div><div class="line"></div><div class="line">app.directive(<span class="string">'myInteger'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">require</span>:<span class="string">'ngModel'</span>,</div><div class="line">      <span class="comment">/**</span></div><div class="line">      * </div><div class="line">      */</div><div class="line">      link:<span class="function"><span class="keyword">function</span>(<span class="params">scope,elm,attrs,ctrl</span>) </span>&#123;</div><div class="line">           ctrl.$validators.myInteger = <span class="function"><span class="keyword">function</span>(<span class="params">modelValue,viewValue</span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span>(ctrl.$isEmpty(modelValue))&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span>(INTEGER_REGEXP.test(viewValue))&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">           &#125;    </div><div class="line">        </div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：自定义验证myInteger/" data-id="cizeb4nog000nbsbvvg0wsjmj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Angular技巧：在多个控制器之间共享数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/20/Angular技巧：在多个控制器之间共享数据/" class="article-date">
+  <time datetime="2017-02-20T13:22:24.000Z" itemprop="datePublished">2017-02-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/20/Angular技巧：在多个控制器之间共享数据/">Angular技巧：在多个控制器之间共享数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：在多个控制器之间共享数据/" data-id="cizeb4nnj000kbsbvhip6jl9i" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Angular技巧：-digest" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/02/20/Angular技巧：-digest/" class="article-date">
@@ -83,11 +281,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="digest"><a href="#digest" class="headerlink" title="$digest"></a>$digest</h1><p>$digest 只深度查找调用方下面所有的模型</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：-digest/" data-id="cize4ni37000fcsbvx894e5jz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：-digest/" data-id="cizeb4nnd000ibsbvz6gi0sxq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -123,7 +322,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：-apply/" data-id="cize4ni3h000gcsbv60i82st1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：-apply/" data-id="cizeb4noe000mbsbvsgqa74tb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -167,7 +366,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：优化/" data-id="cize4ni3h000hcsbvb8f3558c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：优化/" data-id="cizeb4nng000jbsbvrhigzez3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -203,7 +402,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular入门：MVVM/" data-id="cize4ni21000acsbvtr7dpaze" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular入门：MVVM/" data-id="cizeb4nm10007bsbv9sqrey9c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -239,7 +438,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular入门：-scope/" data-id="cize4ni0x0002csbv7i285vte" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular入门：-scope/" data-id="cizeb4nlm0003bsbvh1gmilo2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -275,151 +474,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular入门：-resource/" data-id="cize4ni0n0001csbvyw2zniyr" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Angular入门：-http" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/20/Angular入门：-http/" class="article-date">
-  <time datetime="2017-02-20T12:34:04.000Z" itemprop="datePublished">2017-02-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/20/Angular入门：-http/">Angular入门：$http</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular入门：-http/" data-id="cize4ni0d0000csbvh8pleqra" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Angular入门：Bootstrap" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/20/Angular入门：Bootstrap/" class="article-date">
-  <time datetime="2017-02-20T12:33:39.000Z" itemprop="datePublished">2017-02-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/20/Angular入门：Bootstrap/">Angular入门：Bootstrap</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular入门：Bootstrap/" data-id="cize4ni1r0008csbvfjm2hxyz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Angular入门：模版" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/20/Angular入门：模版/" class="article-date">
-  <time datetime="2017-02-20T12:33:29.000Z" itemprop="datePublished">2017-02-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/20/Angular入门：模版/">Angular入门：模版</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular入门：模版/" data-id="cize4ni31000ccsbvntj1uuid" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Angular入门：link函数详解" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/20/Angular入门：link函数详解/" class="article-date">
-  <time datetime="2017-02-20T12:32:56.000Z" itemprop="datePublished">2017-02-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/20/Angular入门：link函数详解/">Angular入门：link函数详解</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular入门：link函数详解/" data-id="cize4ni21000bcsbvpwhr0f55" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular入门：-resource/" data-id="cizeb4nli0002bsbvbd8vivsw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -470,23 +525,23 @@
       <ul>
         
           <li>
+            <a href="/2017/02/20/Angular技巧：重写内置验证器方法/">Angular技巧：重写内置验证器方法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/20/Angular入门：基础知识/">Angular入门：基础知识</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/20/Angular技巧：自定义验证myInteger/">Angular技巧：自定义验证myInteger</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/20/Angular技巧：在多个控制器之间共享数据/">Angular技巧：在多个控制器之间共享数据</a>
+          </li>
+        
+          <li>
             <a href="/2017/02/20/Angular技巧：-digest/">Angular技巧：$digest</a>
-          </li>
-        
-          <li>
-            <a href="/2017/02/20/Angular技巧：-apply/">Angular技巧：$apply</a>
-          </li>
-        
-          <li>
-            <a href="/2017/02/20/Angular技巧：优化/">Angular技巧：优化</a>
-          </li>
-        
-          <li>
-            <a href="/2017/02/20/Angular入门：MVVM/">Angular入门：MVVM</a>
-          </li>
-        
-          <li>
-            <a href="/2017/02/20/Angular入门：-scope/">Angular入门：$scope</a>
           </li>
         
       </ul>
