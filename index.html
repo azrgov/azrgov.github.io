@@ -61,6 +61,76 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Angular入门：-scope事件机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/21/Angular入门：-scope事件机制/" class="article-date">
+  <time datetime="2017-02-20T16:45:59.000Z" itemprop="datePublished">2017-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/21/Angular入门：-scope事件机制/">Angular入门：$scope事件机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="scope-事件机制"><a href="#scope-事件机制" class="headerlink" title="$scope 事件机制"></a>$scope 事件机制</h1><p>$scope可以向其他$scope广播或发送事件，其他$scope监听事件并处理，从而实现通信，也就是说可以通过$scope事件机制实现不同controller之间的数据共享。</p>
+<h1 id="三种方法"><a href="#三种方法" class="headerlink" title="三种方法"></a>三种方法</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>参数说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$boardcast(name,args)</td>
+<td>父级$scope向子级$scope发送事件</td>
+<td></td>
+</tr>
+<tr>
+<td>$emit(name,args)</td>
+<td>子级$scope向父级$scope发送事件</td>
+<td></td>
+</tr>
+<tr>
+<td>$on(name,handler)</td>
+<td>监听事件的函数，handler参数为对事件进行处理的函数</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>$broadcast(name, args)为父级$scope向子级$scope发送事件</p>
+</li>
+<li><p>$emit(name, args)为子级$scope向父级$scope发送事件</p>
+</li>
+<li><p>$on(name, handler)为监听事件的函数，handler参数为对事件进行处理的函数，该函数包含两个参数：event和args，分别为事件对象和发送事件时传递的args参数。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = angular.module(<span class="string">"exampleApp"</span>, []);</div><div class="line">    app.controller(<span class="string">"FirstController"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$rootScope, $scope</span>) </span>&#123;</div><div class="line">        $scope.person = &#123;&#125;;</div><div class="line">        $scope.shareObject = <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</div><div class="line">            obj = obj || &#123;&#125;;</div><div class="line">            <span class="comment">//将事件以"ShareObjectEvent"为名进行广播</span></div><div class="line">            $rootScope.$broadcast(<span class="string">"ShareObjectEvent"</span>, obj);</div><div class="line">        &#125;;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    app.controller(<span class="string">"SecondController"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</div><div class="line">        <span class="comment">//监听"ShareObjectEvent"事件</span></div><div class="line">        $scope.$on(<span class="string">"ShareObjectEvent"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event, args</span>) </span>&#123;</div><div class="line">            person = args;</div><div class="line">        &#125;);</div><div class="line">        $scope.reportData = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> reportString = <span class="string">""</span>;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> person) &#123;</div><div class="line">                reportString += <span class="string">"person's "</span> + i + <span class="string">" is "</span> + person[i] + <span class="string">"\n"</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">console</span>.log(reportString);</div><div class="line">        &#125;;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/21/Angular入门：-scope事件机制/" data-id="cizewftmq0005l8bv2rtv1gvr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Angular技巧：重写内置验证器方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/02/20/Angular技巧：重写内置验证器方法/" class="article-date">
@@ -91,7 +161,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：重写内置验证器方法/" data-id="cizebkeub000mnsbv8dstl10d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：重写内置验证器方法/" data-id="cizewftow000pl8bv1li8ukme" class="article-share-link">Share</a>
       
       
     </footer>
@@ -174,7 +244,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular入门：基础知识/" data-id="cizebket8000gnsbvlxre651k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular入门：基础知识/" data-id="cizewftnl000fl8bvlx03lcco" class="article-share-link">Share</a>
       
       
     </footer>
@@ -213,7 +283,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：自定义验证myInteger/" data-id="cizebkeuu000rnsbv6pc8jpgd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：自定义验证myInteger/" data-id="cizewftow000ol8bv1mqgbega" class="article-share-link">Share</a>
       
       
     </footer>
@@ -249,7 +319,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：在多个控制器之间共享数据/" data-id="cizebketo000knsbv10hdfwk6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：在多个控制器之间共享数据/" data-id="cizewfto0000ml8bvp0t6bzc9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -286,7 +356,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：-digest/" data-id="cizebketf000hnsbv4zwfryu4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：-digest/" data-id="cizewfto0000kl8bvxgzjpchg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -322,7 +392,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：-apply/" data-id="cizebketi000insbv0mk7ugbt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：-apply/" data-id="cizewfto0000jl8bvvrtt8877" class="article-share-link">Share</a>
       
       
     </footer>
@@ -366,7 +436,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：优化/" data-id="cizebketl000jnsbv5pwfgqqc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular技巧：优化/" data-id="cizewfto0000ll8bvnn46wr3d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -402,7 +472,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular入门：MVVM/" data-id="cizebkesb0006nsbvdmowhfcr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular入门：MVVM/" data-id="cizewftn50009l8bvzcve8a61" class="article-share-link">Share</a>
       
       
     </footer>
@@ -438,43 +508,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular入门：-scope/" data-id="cizebkert0002nsbv5p7y1avx" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Angular入门：-resource" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/20/Angular入门：-resource/" class="article-date">
-  <time datetime="2017-02-20T12:47:02.000Z" itemprop="datePublished">2017-02-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/20/Angular入门：-resource/">Angular入门：$resource</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/20/Angular入门：-resource/" data-id="cizebkest000ansbvx3p4sv0h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/20/Angular入门：-scope/" data-id="cizewftma0003l8bv1o47am4r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -525,6 +559,10 @@
       <ul>
         
           <li>
+            <a href="/2017/02/21/Angular入门：-scope事件机制/">Angular入门：$scope事件机制</a>
+          </li>
+        
+          <li>
             <a href="/2017/02/20/Angular技巧：重写内置验证器方法/">Angular技巧：重写内置验证器方法</a>
           </li>
         
@@ -538,10 +576,6 @@
         
           <li>
             <a href="/2017/02/20/Angular技巧：在多个控制器之间共享数据/">Angular技巧：在多个控制器之间共享数据</a>
-          </li>
-        
-          <li>
-            <a href="/2017/02/20/Angular技巧：-digest/">Angular技巧：$digest</a>
           </li>
         
       </ul>
